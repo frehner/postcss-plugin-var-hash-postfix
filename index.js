@@ -30,22 +30,10 @@ module.exports = (opts = {}) => {
         }
 
         if (newDecl.value.includes("--")) {
-          // First find all CSS variable names
-          const varMatches = [
-            ...newDecl.value.matchAll(/var\(--(.*?)(?=\)|,)/g),
-          ];
-
-          // Create a map of replacements
-          const replacements = varMatches.map((match) => ({
-            original: match[0],
-            varName: match[1],
-            replacement: `var(--${match[1]}${hash}`,
-          }));
-
-          // Apply replacements
-          replacements.forEach(({ original, replacement }) => {
-            newDecl.value = newDecl.value.replace(original, replacement);
-          });
+          newDecl.value = newDecl.value.replace(
+            /var\(--(.*?)(?=\)|,)/g,
+            (_, varName) => `var(--${varName}${hash}`
+          );
         }
 
         decl.replaceWith(newDecl);
