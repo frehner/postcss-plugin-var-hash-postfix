@@ -6,6 +6,7 @@ const alreadyProcessed = Symbol("alreadyProcessed");
 module.exports = (opts = {}) => {
   return {
     postcssPlugin: "postcss-plugin-hash-vars",
+    // eslint-disable-next-line no-unused-vars
     Declaration(decl, postcss) {
       if (decl[alreadyProcessed]) return;
 
@@ -26,11 +27,24 @@ module.exports = (opts = {}) => {
         if (newDecl.prop.startsWith("--")) {
           newDecl.prop += hash;
         }
+
         if (newDecl.value.includes("--")) {
-          newDecl.value = newDecl.value.replace(
-            /var\(--(.*?)(?=\)|,)(.*?)(?:\))/g,
-            `var(--$1${hash}$2)`
-          );
+          // First find all CSS variable names
+          const varMatches = [
+            ...newDecl.value.matchAll(/var\(--(.*?)(?=\)|,)/g),
+          ];
+
+          // Create a map of replacements
+          const replacements = varMatches.map((match) => ({
+            original: match[0],
+            varName: match[1],
+            replacement: `var(--${match[1]}${hash}`,
+          }));
+
+          // Apply replacements
+          replacements.forEach(({ original, replacement }) => {
+            newDecl.value = newDecl.value.replace(original, replacement);
+          });
         }
 
         decl.replaceWith(newDecl);

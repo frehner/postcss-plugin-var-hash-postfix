@@ -74,8 +74,8 @@ test("works with multiple vars", async () => {
 
 test("works with a fallback value", async () => {
   await run(
-    "a{ color: var(--test, red); }",
-    "a{ color: var(--test-hash, red); }",
+    "a{ color: var(--test, rebeccapurple); }",
+    "a{ color: var(--test-hash, rebeccapurple); }",
     {}
   );
 });
@@ -84,6 +84,14 @@ test("works with a var as a fallback value", async () => {
   await run(
     "a{ color: var(--test, var(--test2)); }",
     "a{ color: var(--test-hash, var(--test2-hash)); }",
+    {}
+  );
+});
+
+test("works with complex nested values and vars", async () => {
+  await run(
+    "a{ color: var(--test, var(--test2, var(--test3, rebeccapurple))); }",
+    "a{ color: var(--test-hash, var(--test2-hash, var(--test3-hash, rebeccapurple))); }",
     {}
   );
 });
