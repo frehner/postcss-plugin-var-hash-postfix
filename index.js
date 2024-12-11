@@ -25,13 +25,33 @@ module.exports = (opts = {}) => {
         }
 
         if (newDecl.prop.startsWith("--")) {
-          newDecl.prop += hash;
+          if (
+            opts.ignorePrefixes?.length > 0 &&
+            opts.ignorePrefixes.some((prefix) => {
+              return newDecl.prop.startsWith("--" + prefix);
+            })
+          ) {
+            // do nothing because it's in the ignorePrefixes
+          } else {
+            newDecl.prop += hash;
+          }
         }
 
         if (newDecl.value.includes("--")) {
           newDecl.value = newDecl.value.replace(
             /var\(--(.*?)(?=\)|,)/g,
-            (_, varName) => `var(--${varName}${hash}`
+            (_, varName) => {
+              if (
+                opts.ignorePrefixes?.length > 0 &&
+                opts.ignorePrefixes.some((prefix) => {
+                  return varName.startsWith(prefix);
+                })
+              ) {
+                // do nothing because it's in the ignorePrefixes
+                return `var(--${varName}`;
+              }
+              return `var(--${varName}${hash}`;
+            }
           );
         }
 

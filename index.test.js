@@ -141,3 +141,61 @@ test("doesn't replace class names with BEM syntax that contains --", async () =>
     }
   );
 });
+
+test("doesn't transform properties that start with the ignorePrefixes", async () => {
+  await run("a{ --ignore: 123; }", "a{ --ignore: 123; }", {
+    hash: "hash",
+    ignorePrefixes: ["ignore"],
+  });
+});
+
+test("uses multiple ignorePrefixes for properties", async () => {
+  await run(
+    "a{ --ignore: 123; --ignore2: 123; }",
+    "a{ --ignore: 123; --ignore2: 123; }",
+    {
+      hash: "hash",
+      ignorePrefixes: ["ignore", "ignore2"],
+    }
+  );
+});
+
+test("doesn't transform values that start with the ignorePrefixes", async () => {
+  await run("a{ color: var(--ignore); }", "a{ color: var(--ignore); }", {
+    hash: "hash",
+    ignorePrefixes: ["ignore"],
+  });
+});
+
+test("uses multiple ignorePrefixes for values", async () => {
+  await run(
+    "a{ color: var(--ignore); background-color: var(--ignore2); }",
+    "a{ color: var(--ignore); background-color: var(--ignore2); }",
+    {
+      hash: "hash",
+      ignorePrefixes: ["ignore", "ignore2"],
+    }
+  );
+});
+
+test("ignores some and not others for properties", async () => {
+  await run(
+    "a{ --ignore: 123; --test: 123; }",
+    "a{ --ignore: 123; --test-hash: 123; }",
+    {
+      hash: "hash",
+      ignorePrefixes: ["ignore"],
+    }
+  );
+});
+
+test("ignores some and not others for values", async () => {
+  await run(
+    "a{ color: var(--ignore); background-color: var(--test); }",
+    "a{ color: var(--ignore); background-color: var(--test-hash); }",
+    {
+      hash: "hash",
+      ignorePrefixes: ["ignore"],
+    }
+  );
+});
