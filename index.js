@@ -9,6 +9,7 @@ module.exports = (opts = {}) => {
     // eslint-disable-next-line no-unused-vars
     Declaration(decl, postcss) {
       if (decl[alreadyProcessed]) return;
+      if (!opts.hash) return;
 
       if (
         !decl[alreadyProcessed] &&
@@ -18,7 +19,7 @@ module.exports = (opts = {}) => {
         const newDecl = decl.clone();
         newDecl[alreadyProcessed] = true;
 
-        let hash = "-" + (opts.staticHash ? opts.staticHash : "hash");
+        let hash = "-" + (opts.hash ? opts.hash : "hash");
 
         if (opts.maxLength && opts.maxLength > 0) {
           hash = hash.slice(0, opts.maxLength + 1);
