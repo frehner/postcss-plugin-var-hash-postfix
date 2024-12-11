@@ -19,7 +19,7 @@ module.exports = (opts = {}) => {
         const newDecl = decl.clone();
         newDecl[alreadyProcessed] = true;
 
-        let hash = "-" + (opts.hash ? opts.hash : "hash");
+        let hash = (opts.delimiter || "-") + (opts.hash || "hash");
 
         if (opts.maxLength && opts.maxLength > 0) {
           hash = hash.slice(0, opts.maxLength + 1);

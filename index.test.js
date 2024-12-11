@@ -117,3 +117,17 @@ test("works with complex nested values and vars", async () => {
     }
   );
 });
+
+test("allows a custom delimiter for properties", async () => {
+  await run("a{ --test: 123; }", "a{ --test_hash: 123; }", {
+    hash: "hash",
+    delimiter: "_",
+  });
+});
+
+test("allows a custom delimiter for values", async () => {
+  await run("a{ color: var(--test); }", "a{ color: var(--test_hash); }", {
+    hash: "hash",
+    delimiter: "_",
+  });
+});
