@@ -1,31 +1,42 @@
+const alreadyProcessed = Symbol("alreadyProcessed");
+
 /**
  * @type {import('postcss').PluginCreator}
  */
 module.exports = (opts = {}) => {
-  // Work with options here
-
   return {
-    postcssPlugin: 'postcss-plugin-hash-vars',
-    /*
-    Root (root, postcss) {
-      // Transform CSS AST here
-    }
-    */
+    postcssPlugin: "postcss-plugin-hash-vars",
+    Declaration(decl, postcss) {
+      if (decl[alreadyProcessed]) return;
 
-    /*
-    Declaration (decl, postcss) {
-      // The faster way to find Declaration node
-    }
-    */
+      if (
+        !decl[alreadyProcessed] &&
+        (decl.prop.startsWith("--") || decl.value.includes("--"))
+      ) {
+        // console.log(decl);
+        const newDecl = decl.clone();
+        newDecl[alreadyProcessed] = true;
 
-    /*
-    Declaration: {
-      color: (decl, postcss) {
-        // The fastest way find Declaration node if you know property name
+        let hash = "-" + (opts.staticHash ? opts.staticHash : "hash");
+
+        if (opts.maxLength && opts.maxLength > 0) {
+          hash = hash.slice(0, opts.maxLength + 1);
+        }
+
+        if (newDecl.prop.startsWith("--")) {
+          newDecl.prop += hash;
+        }
+        if (newDecl.value.includes("--")) {
+          newDecl.value = newDecl.value.replace(
+            /var\(--(.*?)(?=\)|,)(.*?)(?:\))/g,
+            `var(--$1${hash}$2)`
+          );
+        }
+
+        decl.replaceWith(newDecl);
       }
-    }
-    */
-  }
-}
+    },
+  };
+};
 
-module.exports.postcss = true
+module.exports.postcss = true;
