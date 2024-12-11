@@ -1,0 +1,33 @@
+{
+  "name": "postcss-plugin-hash-vars",
+  "version": "0.0.0",
+  "description": "PostCSS plugin Hash Vars",
+  "keywords": ["postcss", "css", "postcss-plugin", "postcss-plugin-hash-vars"],
+  "scripts": {
+    "unit": "node --test index.test.js",
+    "test": "npm run unit && eslint ."
+  },
+  "author": "Anthony Frehner <frehner@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": "frehner/postcss-plugin-hash-vars",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "postcss": "^8.4.27"
+  },
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "postcss": "^8.4.27"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": ["eslint:recommended"]
+  }
+}
