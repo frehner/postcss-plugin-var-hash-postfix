@@ -6,8 +6,7 @@ const alreadyProcessed = Symbol("alreadyProcessed");
 module.exports = (opts = {}) => {
   return {
     postcssPlugin: "postcss-plugin-hash-vars",
-    // eslint-disable-next-line no-unused-vars
-    Declaration(decl, postcss) {
+    Declaration(decl) {
       if (decl[alreadyProcessed]) return;
       if (!opts.hash) return;
 

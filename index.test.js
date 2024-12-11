@@ -131,3 +131,13 @@ test("allows a custom delimiter for values", async () => {
     delimiter: "_",
   });
 });
+
+test("doesn't replace class names with BEM syntax that contains --", async () => {
+  await run(
+    ".a--b{ color: rebeccapurple; }",
+    ".a--b{ color: rebeccapurple; }",
+    {
+      hash: "hash",
+    }
+  );
+});
