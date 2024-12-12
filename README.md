@@ -31,10 +31,10 @@ npm i postcss-plugin-var-hash-postfix
 Add the `postcss-plugin-var-hash-postfix` plugin to your PostCSS config:
 
 ```js
-import postCssHashVars from "postcss-plugin-var-hash-postfix";
+import postCssVarHashPostfix from "postcss-plugin-var-hash-postfix";
 
 await postCss([
-  postCssHashVars({
+  postCssVarHashPostfix({
     hash: "abc123",
   }),
 ]);
@@ -61,7 +61,7 @@ Plugin Options
 The hash to apply as a postfix to your CSS Variables. You can hardcode a hash and update it manually:
 
 ```js
-postCssHashVars({
+postCssVarHashPostfix({
   hash: "abc123",
 });
 ```
@@ -69,7 +69,7 @@ postCssHashVars({
 Or use an environment variable to change the hash on every build, such as:
 
 ```js
-postCssHashVars({
+postCssVarHashPostfix({
   hash: process.env.GIT_SHA,
 });
 ```
@@ -91,7 +91,7 @@ Will truncate your hashes to a specific length, so you don't have to do it manua
 ```js
 // input: --test: rebeccapurple;
 
-postCssHashVars({
+postCssVarHashPostfix({
   hash: "1234567890",
   maxLength: 5,
 });
@@ -106,7 +106,7 @@ An array of strings for which any CSS Variable that starts with the prefix will 
 ```js
 // input: --ignore: blue; --test: green;
 
-postCssHashVars({
+postCssVarHashPostfix({
   hash: "123abc",
   ignorePrefixes: ["ignore"],
 });
@@ -123,7 +123,7 @@ Customize the delimiter used to separate the existing CSS Variable name and the 
 ```js
 // input: --test: rebeccapurple;
 
-postCssHashVars({
+postCssVarHashPostfix({
   hash: "123abc",
   delimiter: "_",
 });
