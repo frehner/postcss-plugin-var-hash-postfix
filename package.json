@@ -1,6 +1,6 @@
 {
   "name": "postcss-plugin-var-hash-postfix",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "PostCSS plugin to append a hash to the end of a CSS Variable",
   "keywords": [
     "postcss",
