@@ -19,6 +19,10 @@
     "type": "git",
     "url": "git+https://github.com/frehner/postcss-plugin-var-hash-postfix.git"
   },
+  "files": [
+    "index.js",
+    "CHANGELOG.md"
+  ],
   "engines": {
     "node": ">=18.0.0"
   },
