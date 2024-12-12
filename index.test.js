@@ -169,11 +169,11 @@ test("doesn't transform values that start with the ignorePrefixes", async () => 
 
 test("uses multiple ignorePrefixes for values", async () => {
   await run(
-    "a{ color: var(--ignore); background-color: var(--ignore2); }",
-    "a{ color: var(--ignore); background-color: var(--ignore2); }",
+    "a{ color: var(--ignore); background-color: var(--skip); }",
+    "a{ color: var(--ignore); background-color: var(--skip); }",
     {
       hash: "hash",
-      ignorePrefixes: ["ignore", "ignore2"],
+      ignorePrefixes: ["ignore", "skip"],
     }
   );
 });
@@ -196,6 +196,17 @@ test("ignores some and not others for values", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["ignore"],
+    }
+  );
+});
+
+test("works with complex nested values and vars and ignores some", async () => {
+  await run(
+    "a{ color: var(--test, var(--skip, var(--test3, rebeccapurple))); }",
+    "a{ color: var(--test-hash, var(--skip, var(--test3-hash, rebeccapurple))); }",
+    {
+      hash: "hash",
+      ignorePrefixes: ["skip"],
     }
   );
 });
