@@ -1,5 +1,11 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.1.2
+
+### Patch Changes
+
+- 752de0a: cleanup published files
+
 ## 0.1.1
 
 ### Patch Changes
