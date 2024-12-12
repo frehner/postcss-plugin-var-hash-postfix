@@ -51,7 +51,7 @@ module.exports = (opts = {}) => {
                 return `--${varName}`;
               }
               return `--${varName}${hash}`;
-            }
+            },
           );
         }
 

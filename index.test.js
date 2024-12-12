@@ -32,7 +32,7 @@ test("replaces kebab-case var values with hash", async () => {
     "a{ color: var(--test-kebab-hash); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -42,7 +42,7 @@ test("replaces snake-case var values with hash", async () => {
     "a{ color: var(--test_kebab-hash); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -52,7 +52,7 @@ test("replaces multiple var values with hash", async () => {
     "a{ font: var(--first-one-hash) var(--second-one-hash); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -84,7 +84,7 @@ test("works with multiple vars", async () => {
     "a{ color: var(--test-hash); background: var(--test2-hash); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -94,7 +94,7 @@ test("works with a fallback value", async () => {
     "a{ color: var(--test-hash, rebeccapurple); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -104,7 +104,7 @@ test("works with a var as a fallback value", async () => {
     "a{ color: var(--test-hash, var(--test2-hash)); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -114,7 +114,7 @@ test("works with complex nested values and vars", async () => {
     "a{ color: var(--test-hash, var(--test2-hash, var(--test3-hash, rebeccapurple))); }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -138,7 +138,7 @@ test("doesn't replace class names with BEM syntax that contains --", async () =>
     ".a--b{ color: rebeccapurple; }",
     {
       hash: "hash",
-    }
+    },
   );
 });
 
@@ -156,7 +156,7 @@ test("uses multiple ignorePrefixes for properties", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["ignore", "ignore2"],
-    }
+    },
   );
 });
 
@@ -174,7 +174,7 @@ test("uses multiple ignorePrefixes for values", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["ignore", "skip"],
-    }
+    },
   );
 });
 
@@ -185,7 +185,7 @@ test("ignores some and not others for properties", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["ignore"],
-    }
+    },
   );
 });
 
@@ -196,7 +196,7 @@ test("ignores some and not others for values", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["ignore"],
-    }
+    },
   );
 });
 
@@ -207,7 +207,7 @@ test("works with complex nested values and vars and ignores some", async () => {
     {
       hash: "hash",
       ignorePrefixes: ["skip"],
-    }
+    },
   );
 });
 
@@ -223,6 +223,6 @@ test("works when the value has newlines", async () => {
   );}`,
     {
       hash: "hash",
-    }
+    },
   );
 });
