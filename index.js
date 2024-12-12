@@ -5,7 +5,7 @@ const alreadyProcessed = Symbol("alreadyProcessed");
  */
 module.exports = (opts = {}) => {
   return {
-    postcssPlugin: "postcss-plugin-hash-vars",
+    postcssPlugin: "postcss-plugin-var-hash-postfix",
     Declaration(decl) {
       if (decl[alreadyProcessed]) return;
       if (!opts.hash) return;

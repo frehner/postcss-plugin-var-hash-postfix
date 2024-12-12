@@ -22,16 +22,16 @@ div {
 
 ## Setup
 
-Install the `postcss-plugin-hash-vars` package:
+Install the `postcss-plugin-var-hash-postfix` package:
 
 ```cli
-npm i postcss-plugin-hash-vars
+npm i postcss-plugin-var-hash-postfix
 ```
 
-Add the `postcss-plugin-hash-vars` plugin to your PostCSS config:
+Add the `postcss-plugin-var-hash-postfix` plugin to your PostCSS config:
 
 ```js
-import postCssHashVars from "postcss-plugin-hash-vars";
+import postCssHashVars from "postcss-plugin-var-hash-postfix";
 
 await postCss([
   postCssHashVars({
