@@ -1,4 +1,4 @@
-# PostCSS Plugin Hash Vars
+# PostCSS Plugin Var Hash Postfix
 
 A PostCSS plugin to add hashes or other postfixes to your CSS Variables (CSS Custom Properties). Take your source CSS from
 
