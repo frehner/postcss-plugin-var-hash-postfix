@@ -1,7 +1,7 @@
 {
   "name": "postcss-plugin-var-hash-postfix",
   "version": "0.0.0",
-  "description": "PostCSS plugin Hash Vars",
+  "description": "PostCSS plugin to append a hash to the end of a CSS Variable",
   "keywords": [
     "postcss",
     "css",
@@ -15,7 +15,10 @@
   },
   "author": "Anthony Frehner <frehner@users.noreply.github.com>",
   "license": "MIT",
-  "repository": "frehner/postcss-plugin-var-hash-postfix",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frehner/postcss-plugin-var-hash-postfix.git"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
@@ -23,6 +26,7 @@
     "postcss": "^8.4.27"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.10",
     "eslint": "^8.47.0",
     "postcss": "^8.4.27"
   },
@@ -37,5 +41,6 @@
     "extends": [
       "eslint:recommended"
     ]
-  }
+  },
+  "dependencies": {}
 }
