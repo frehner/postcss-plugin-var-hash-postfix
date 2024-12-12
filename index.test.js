@@ -210,3 +210,19 @@ test("works with complex nested values and vars and ignores some", async () => {
     }
   );
 });
+
+test("works when the value has newlines", async () => {
+  await run(
+    `a{ color: var(
+    --test,
+    blue
+  );}`,
+    `a{ color: var(
+    --test-hash,
+    blue
+  );}`,
+    {
+      hash: "hash",
+    }
+  );
+});

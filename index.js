@@ -39,7 +39,7 @@ module.exports = (opts = {}) => {
 
         if (newDecl.value.includes("--")) {
           newDecl.value = newDecl.value.replace(
-            /var\(--(.*?)(?=\)|,)/g,
+            /--(.*?)(?=\)|,)/g,
             (_, varName) => {
               if (
                 opts.ignorePrefixes?.length > 0 &&
@@ -48,9 +48,9 @@ module.exports = (opts = {}) => {
                 })
               ) {
                 // do nothing because it's in the ignorePrefixes
-                return `var(--${varName}`;
+                return `--${varName}`;
               }
-              return `var(--${varName}${hash}`;
+              return `--${varName}${hash}`;
             }
           );
         }
