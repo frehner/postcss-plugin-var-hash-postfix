@@ -1,5 +1,11 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.1.3
+
+### Patch Changes
+
+- 9bac806: Fix bug when there's a newline after var(). Now don't even look for var, just look for --
+
 ## 0.1.2
 
 ### Patch Changes
