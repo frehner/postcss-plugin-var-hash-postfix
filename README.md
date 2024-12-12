@@ -20,6 +20,8 @@ div {
 }
 ```
 
+Will also transform CSS Variables declared using the [@property at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@property) synatx.
+
 ## Setup
 
 Install the `postcss-plugin-var-hash-postfix` package:
