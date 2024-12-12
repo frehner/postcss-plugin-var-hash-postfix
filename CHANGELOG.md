@@ -1,5 +1,11 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.2.0
+
+### Minor Changes
+
+- 8aadaa4: Also transform @property declarations
+
 ## 0.1.3
 
 ### Patch Changes
