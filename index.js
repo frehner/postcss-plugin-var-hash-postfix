@@ -20,7 +20,7 @@ module.exports = (opts = {}) => {
 
         let hash = (opts.delimiter || "-") + (opts.hash || "hash");
 
-        if (opts.maxLength && opts.maxLength > 0) {
+        if (typeof opts.maxLength === "number" && opts.maxLength > 0) {
           hash = hash.slice(0, opts.maxLength + 1);
         }
 
