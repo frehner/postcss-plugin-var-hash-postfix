@@ -24,7 +24,7 @@ div {
 
 Install the `postcss-plugin-var-hash-postfix` package:
 
-```cli
+```bash
 npm i postcss-plugin-var-hash-postfix
 ```
 
