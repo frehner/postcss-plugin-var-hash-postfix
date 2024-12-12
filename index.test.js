@@ -226,3 +226,16 @@ test("works when the value has newlines", async () => {
     },
   );
 });
+
+test("works with at-rules", async () => {
+  await run("@property --test {}", "@property --test-hash {}", {
+    hash: "hash",
+  });
+});
+
+test("works with at-rules that have ignorePrefixes", async () => {
+  await run("@property --ignore {}", "@property --ignore {}", {
+    hash: "hash",
+    ignorePrefixes: ["ignore"],
+  });
+});
