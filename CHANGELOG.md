@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 8aadaa4: Also transform @property declarations
+- 8aadaa4: Also transform `@property` declarations
 
 ## 0.1.3
 
