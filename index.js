@@ -39,7 +39,7 @@ module.exports = (opts = {}) => {
 
         if (newDecl.value.includes("--")) {
           newDecl.value = newDecl.value.replace(
-            /--(.*?)(?=\)|,)/g,
+            /--([a-zA-Z0-9_-]+)/g,
             (_, varName) => {
               if (
                 opts.ignorePrefixes?.length > 0 &&
