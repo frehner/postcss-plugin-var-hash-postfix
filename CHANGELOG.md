@@ -1,5 +1,11 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.3.0
+
+### Minor Changes
+
+- 4c87703: fixed @property transition case where it wasnt wrapped in a var()
+
 ## 0.2.0
 
 ### Minor Changes
