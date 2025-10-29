@@ -239,3 +239,13 @@ test("works with at-rules that have ignorePrefixes", async () => {
     ignorePrefixes: ["ignore"],
   });
 });
+
+test("works with CSS variables used directly without var() syntax in transition", async () => {
+  await run(
+    "a{ transition: --s-thumb-color 0.3s cubic-bezier(.25, 0, .5, 1); }",
+    "a{ transition: --s-thumb-color-hash 0.3s cubic-bezier(.25, 0, .5, 1); }",
+    {
+      hash: "hash",
+    },
+  );
+});
