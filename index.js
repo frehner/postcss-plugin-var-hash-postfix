@@ -62,7 +62,10 @@ module.exports = (opts = {}) => {
       if (atRule[alreadyProcessed]) return;
       if (!opts.hash) return;
 
-      if (atRule.name === "property" && atRule.params.startsWith("--")) {
+      if (
+        (atRule.name === "property" || atRule.name === "container") &&
+        atRule.params.startsWith("--")
+      ) {
         const newAtRule = atRule.clone();
         newAtRule[alreadyProcessed] = true;
 
@@ -74,7 +77,14 @@ module.exports = (opts = {}) => {
         ) {
           // do nothing because it's in the ignorePrefixes
         } else {
-          newAtRule.params += hash;
+          if (atRule.name === "container") {
+            newAtRule.params = newAtRule.params.replace(
+              /^(--[a-zA-Z0-9_-]+)/,
+              `$1${hash}`,
+            );
+          } else {
+            newAtRule.params += hash;
+          }
         }
 
         atRule.replaceWith(newAtRule);

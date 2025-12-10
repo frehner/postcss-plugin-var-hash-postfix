@@ -249,3 +249,21 @@ test("works with CSS variables used directly without var() syntax in transition"
     },
   );
 });
+
+test("works with named @container queries and container-names that start with --", async () => {
+  await run(
+    "@container --container (min-width: 100px) {} .container { container-name: --container; }",
+    "@container --container-hash (min-width: 100px) {} .container { container-name: --container-hash; }",
+    {
+      hash: "hash",
+    },
+  );
+
+  await run(
+    "@container container (min-width: 100px) {} .container { container-name: container; }",
+    "@container container (min-width: 100px) {} .container { container-name: container; }",
+    {
+      hash: "hash",
+    },
+  );
+});
