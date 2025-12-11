@@ -1,5 +1,11 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.3.2
+
+### Patch Changes
+
+- 7b78ce1: Test publishing
+
 ## 0.3.1
 
 ### Patch Changes
