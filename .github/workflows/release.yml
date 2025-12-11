@@ -7,7 +7,10 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-permissions: write-all
+permissions:
+  contents: write # For changesets to push tags/commits
+  pull-requests: write # For changesets to create PRs
+  id-token: write # Required for npm OIDC trusted publishing
 
 jobs:
   release:
@@ -15,12 +18,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Install Dependencies
         run: npm ci
@@ -32,4 +39,3 @@ jobs:
           publish: npm publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
