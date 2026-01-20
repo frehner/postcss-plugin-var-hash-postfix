@@ -284,11 +284,11 @@ test("doesn't transform properties that don't match includePrefixes", async () =
 
 test("uses multiple includePrefixes for properties", async () => {
   await run(
-    "a{ --include: 123; --include2: 123; }",
-    "a{ --include-hash: 123; --include2-hash: 123; }",
+    "a{ --include: 123; --theme: 123; }",
+    "a{ --include-hash: 123; --theme-hash: 123; }",
     {
       hash: "hash",
-      includePrefixes: ["include", "include2"],
+      includePrefixes: ["include", "theme"],
     },
   );
 });
