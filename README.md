@@ -118,6 +118,41 @@ postCssVarHashPostfix({
 
 Note that this option will ignore _anything_ that starts with the string; with the example above, both `--ignore` and `--ignorethis` would not have a hash appended to them.
 
+### `includePrefixes`
+
+An array of strings for which only CSS Variables that start with the specified prefixes will have a hash appended to them. This is the inverse of `ignorePrefixes` - when provided, variables that don't match any of the prefixes will be left unchanged.
+
+```js
+// input: --my-app-color: blue; --other-var: green;
+
+postCssVarHashPostfix({
+  hash: "123abc",
+  includePrefixes: ["my-app"],
+});
+
+// output: --my-app-color-123abc: blue; --other-var: green;
+```
+
+This is useful when you want to hash only a specific subset of your CSS Variables, such as those belonging to a particular component library or namespace.
+
+Note that this option will include _anything_ that starts with the string; with the example above, both `--my-app-color` and `--my-app-theme` would have a hash appended to them.
+
+#### Using `includePrefixes` and `ignorePrefixes` together
+
+If both options are provided, `includePrefixes` is checked first to determine which variables to hash, then `ignorePrefixes` acts as a filter to exclude specific variables from that included set.
+
+```js
+// input: --my-app-color: blue; --my-app-internal: red; --other: green;
+
+postCssVarHashPostfix({
+  hash: "123abc",
+  includePrefixes: ["my-app"],
+  ignorePrefixes: ["my-app-internal"],
+});
+
+// output: --my-app-color-123abc: blue; --my-app-internal: red; --other: green;
+```
+
 ### `delimiter`
 
 Customize the delimiter used to separate the existing CSS Variable name and the hash.
