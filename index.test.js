@@ -267,3 +267,146 @@ test("works with named @container queries and container-names that start with --
     },
   );
 });
+
+test("only transforms properties that start with the includePrefixes", async () => {
+  await run("a{ --include: 123; }", "a{ --include-hash: 123; }", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("doesn't transform properties that don't match includePrefixes", async () => {
+  await run("a{ --test: 123; }", "a{ --test: 123; }", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("uses multiple includePrefixes for properties", async () => {
+  await run(
+    "a{ --include: 123; --theme: 123; }",
+    "a{ --include-hash: 123; --theme-hash: 123; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include", "theme"],
+    },
+  );
+});
+
+test("only transforms values that start with the includePrefixes", async () => {
+  await run("a{ color: var(--include); }", "a{ color: var(--include-hash); }", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("doesn't transform values that don't match includePrefixes", async () => {
+  await run("a{ color: var(--test); }", "a{ color: var(--test); }", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("uses multiple includePrefixes for values", async () => {
+  await run(
+    "a{ color: var(--include); background-color: var(--allow); }",
+    "a{ color: var(--include-hash); background-color: var(--allow-hash); }",
+    {
+      hash: "hash",
+      includePrefixes: ["include", "allow"],
+    },
+  );
+});
+
+test("includes some and not others for properties", async () => {
+  await run(
+    "a{ --include: 123; --test: 123; }",
+    "a{ --include-hash: 123; --test: 123; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+    },
+  );
+});
+
+test("includes some and not others for values", async () => {
+  await run(
+    "a{ color: var(--include); background-color: var(--test); }",
+    "a{ color: var(--include-hash); background-color: var(--test); }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+    },
+  );
+});
+
+test("works with complex nested values and vars and includes only some", async () => {
+  await run(
+    "a{ color: var(--test, var(--include, var(--test3, rebeccapurple))); }",
+    "a{ color: var(--test, var(--include-hash, var(--test3, rebeccapurple))); }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+    },
+  );
+});
+
+test("works with at-rules and includePrefixes", async () => {
+  await run("@property --include {}", "@property --include-hash {}", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("doesn't transform at-rules that don't match includePrefixes", async () => {
+  await run("@property --test {}", "@property --test {}", {
+    hash: "hash",
+    includePrefixes: ["include"],
+  });
+});
+
+test("works with @container queries and includePrefixes", async () => {
+  await run(
+    "@container --include (min-width: 100px) {} .container { container-name: --include; }",
+    "@container --include-hash (min-width: 100px) {} .container { container-name: --include-hash; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+    },
+  );
+});
+
+test("doesn't transform @container queries that don't match includePrefixes", async () => {
+  await run(
+    "@container --test (min-width: 100px) {} .container { container-name: --test; }",
+    "@container --test (min-width: 100px) {} .container { container-name: --test; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+    },
+  );
+});
+
+test("includePrefixes and ignorePrefixes work together - include wins", async () => {
+  await run(
+    "a{ --include: 123; --test: 123; }",
+    "a{ --include-hash: 123; --test: 123; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+      ignorePrefixes: ["test"],
+    },
+  );
+});
+
+test("includePrefixes and ignorePrefixes work together - ignore filters included", async () => {
+  await run(
+    "a{ --include: 123; --include-ignore: 123; }",
+    "a{ --include-hash: 123; --include-ignore: 123; }",
+    {
+      hash: "hash",
+      includePrefixes: ["include"],
+      ignorePrefixes: ["include-ignore"],
+    },
+  );
+});

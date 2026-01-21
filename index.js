@@ -25,7 +25,24 @@ module.exports = (opts = {}) => {
         newDecl[alreadyProcessed] = true;
 
         if (newDecl.prop.startsWith("--")) {
-          if (
+          // Check if we should only include specific prefixes
+          if (opts.includePrefixes?.length > 0) {
+            const matchesIncludePrefix = opts.includePrefixes.some((prefix) => {
+              return newDecl.prop.startsWith("--" + prefix);
+            });
+            if (!matchesIncludePrefix) {
+              // do nothing because it doesn't match any includePrefixes
+            } else if (
+              opts.ignorePrefixes?.length > 0 &&
+              opts.ignorePrefixes.some((prefix) => {
+                return newDecl.prop.startsWith("--" + prefix);
+              })
+            ) {
+              // do nothing because it's in the ignorePrefixes
+            } else {
+              newDecl.prop += hash;
+            }
+          } else if (
             opts.ignorePrefixes?.length > 0 &&
             opts.ignorePrefixes.some((prefix) => {
               return newDecl.prop.startsWith("--" + prefix);
@@ -41,7 +58,27 @@ module.exports = (opts = {}) => {
           newDecl.value = newDecl.value.replace(
             /--([a-zA-Z0-9_-]+)/g,
             (_, varName) => {
-              if (
+              // Check if we should only include specific prefixes
+              if (opts.includePrefixes?.length > 0) {
+                const matchesIncludePrefix = opts.includePrefixes.some(
+                  (prefix) => {
+                    return varName.startsWith(prefix);
+                  },
+                );
+                if (!matchesIncludePrefix) {
+                  // do nothing because it doesn't match any includePrefixes
+                  return `--${varName}`;
+                } else if (
+                  opts.ignorePrefixes?.length > 0 &&
+                  opts.ignorePrefixes.some((prefix) => {
+                    return varName.startsWith(prefix);
+                  })
+                ) {
+                  // do nothing because it's in the ignorePrefixes
+                  return `--${varName}`;
+                }
+                return `--${varName}${hash}`;
+              } else if (
                 opts.ignorePrefixes?.length > 0 &&
                 opts.ignorePrefixes.some((prefix) => {
                   return varName.startsWith(prefix);
@@ -69,7 +106,31 @@ module.exports = (opts = {}) => {
         const newAtRule = atRule.clone();
         newAtRule[alreadyProcessed] = true;
 
-        if (
+        // Check if we should only include specific prefixes
+        if (opts.includePrefixes?.length > 0) {
+          const matchesIncludePrefix = opts.includePrefixes.some((prefix) => {
+            return newAtRule.params.startsWith("--" + prefix);
+          });
+          if (!matchesIncludePrefix) {
+            // do nothing because it doesn't match any includePrefixes
+          } else if (
+            opts.ignorePrefixes?.length > 0 &&
+            opts.ignorePrefixes.some((prefix) => {
+              return newAtRule.params.startsWith("--" + prefix);
+            })
+          ) {
+            // do nothing because it's in the ignorePrefixes
+          } else {
+            if (atRule.name === "container") {
+              newAtRule.params = newAtRule.params.replace(
+                /^(--[a-zA-Z0-9_-]+)/,
+                `$1${hash}`,
+              );
+            } else {
+              newAtRule.params += hash;
+            }
+          }
+        } else if (
           opts.ignorePrefixes?.length > 0 &&
           opts.ignorePrefixes.some((prefix) => {
             return newAtRule.params.startsWith("--" + prefix);
