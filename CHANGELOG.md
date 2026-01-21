@@ -1,5 +1,15 @@
 # postcss-plugin-var-hash-postfix
 
+## 0.4.0
+
+### Minor Changes
+
+- f934626: Add includePrefixes option to selectively hash CSS custom properties
+
+### Patch Changes
+
+- 7b78ce1: Test publishing
+
 ## 0.3.1
 
 ### Patch Changes
